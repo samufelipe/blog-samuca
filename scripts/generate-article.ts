@@ -85,7 +85,7 @@ REGRAS OBRIGATÓRIAS:
 Retorne o MDX completo agora:`
 
   const response = await client.messages.create({
-    model: 'claude-opus-4-8-20251001',
+    model: 'claude-sonnet-4-6',
     max_tokens: 8192,
     messages: [{ role: 'user', content: prompt }],
   })
