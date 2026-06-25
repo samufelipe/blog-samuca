@@ -1,13 +1,12 @@
-name: Gerar Artigo Automático
+name: Generate Article
 
 on:
   schedule:
-    # Seg, Qua, Sex às 08:00 UTC (05:00 BRT)
     - cron: '0 8 * * 1,3,5'
   workflow_dispatch:
     inputs:
       topic:
-        description: 'Tópico do artigo (deixe vazio para automático)'
+        description: 'Article topic (leave empty for auto)'
         required: false
         type: string
 
@@ -29,10 +28,10 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: npm ci
 
-      - name: Gerar artigo
+      - name: Generate article
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
@@ -42,16 +41,16 @@ jobs:
             npx tsx scripts/generate-article.ts
           fi
 
-      - name: Verificar se há artigo novo
+      - name: Check for new article
         id: check
         run: |
           git diff --quiet content/articles/ || echo "has_changes=true" >> $GITHUB_OUTPUT
 
-      - name: Commit e push
+      - name: Commit and push
         if: steps.check.outputs.has_changes == 'true'
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
           git add content/articles/
-          git commit -m "feat: artigo automatico $(date +%Y-%m-%d)"
+          git commit -m "feat: auto article $(date +%Y-%m-%d)"
           git push
