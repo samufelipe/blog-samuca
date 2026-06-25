@@ -21,7 +21,7 @@ export async function GET() {
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blog — Samuel Felipe</title>
+    <title>Blog | Samuel Felipe</title>
     <link>${BASE}</link>
     <description>Estratégias de Meta Ads, Google Ads e marketing digital para PMEs brasileiras.</description>
     <language>pt-BR</language>

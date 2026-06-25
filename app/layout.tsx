@@ -14,14 +14,14 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://blog.samucads.com.br'),
-  title: { default: 'Blog — Samuel Felipe', template: '%s | Samuel Felipe' },
-  description: 'Estratégias práticas de Meta Ads, Google Ads e marketing digital para PMEs. Artigos com dados reais e aplicação imediata.',
+  title: { default: 'Blog | Samuel Felipe', template: '%s | Samuel Felipe' },
+  description: 'Estratégias práticas de Meta Ads, Google Ads e marketing digital. Artigos com dados reais e aplicação imediata.',
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
     url: 'https://blog.samucads.com.br',
     siteName: 'Blog Samuel Felipe',
-    images: [{ url: '/samuel-profile.jpg', width: 1200, height: 630, alt: 'Samuel Felipe — Especialista em Marketing Digital' }],
+    images: [{ url: '/samuel-profile.jpg', width: 1200, height: 630, alt: 'Samuel Felipe, Especialista em Marketing Digital' }],
   },
   twitter: { card: 'summary_large_image' },
   alternates: { canonical: 'https://blog.samucads.com.br', types: { 'application/rss+xml': '/feed.xml' } },

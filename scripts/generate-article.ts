@@ -39,7 +39,7 @@ const TOPICS = [
   'TikTok Ads vale a pena para o seu negócio? Resposta honesta com dados reais',
 ]
 
-// Imagens por categoria (Unsplash — alta qualidade, uso gratuito com atribuição)
+// Imagens por categoria (Unsplash : alta qualidade, uso gratuito com atribuição)
 const COVER_IMAGES: Record<string, string[]> = {
   'Meta Ads': [
     'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=630&fit=crop&q=80',
@@ -80,7 +80,7 @@ function getCoverImage(category: string, dayIndex: number): string {
 }
 
 const SAMUEL_PROFILE = `
-SOBRE SAMUEL FELIPE (autor do blog — escreva na voz dele, em primeira pessoa):
+SOBRE SAMUEL FELIPE (autor do blog : escreva na voz dele, em primeira pessoa):
 - Especialista em tráfego pago com mais de 6 anos de experiência prática
 - Já atendeu desde negócios locais até grandes marcas: HDI Brasil, Instituto Embelleze (Grupo SMZTO),
   Porsche Center BH, Mercedes-Benz, Grupo Colina, Valem Administradora de Benefícios,
@@ -123,7 +123,7 @@ TOM E ESTILO OBRIGATÓRIOS:
 - Escreva como Samuel falaria com um empreendedor ou gestor que ele respeita, não como um manual técnico
 - Linguagem simples e acessível: quando usar termos técnicos, explique com analogia ou exemplo concreto
 - Alto conhecimento com didática simples: o leitor precisa ENTENDER DE VERDADE, não só ler
-- Primeira pessoa ("eu", "vi", "atendi", "aprendi") — você fala de experiência real
+- Primeira pessoa ("eu", "vi", "atendi", "aprendi") : você fala de experiência real
 - Seja honesto, direto, sem rodeios e sem bajulação ao leitor
 - Use exemplos de clientes reais que você atendeu (pode mencionar o setor ou porte sem revelar dados sensíveis)
 - Mostre o lado humano e comercial, não só o técnico
@@ -163,7 +163,7 @@ REGRAS TÉCNICAS:
 7. Inclua pelo menos 4 dados ou números concretos com contexto real
 8. FAQ: perguntas honestas que um empreendedor desconfiante faria, respostas com pelo menos 3 frases
 9. NÃO use: crucial, pivotal, vibrant, tapestry, delve, showcase, groundbreaking, nestled, boasts
-10. NÃO use travessão longo (—). Use vírgula, ponto ou dois-pontos.
+10. NÃO use travessão longo (:). Use vírgula, ponto ou dois-pontos.
 11. Links internos: 2 sugestões naturais no texto (formato: [texto âncora](/slug-provavel))
 12. Conclusão: termine convidando ao contato via WhatsApp de forma natural, sem soar como anúncio
 

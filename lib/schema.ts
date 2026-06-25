@@ -20,7 +20,7 @@ export const personSchema = {
 export const webSiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Blog — Samuel Felipe',
+  name: 'Blog | Samuel Felipe',
   url: BASE_URL,
   description: 'Estratégias de tráfego pago, Meta Ads, Google Ads e marketing digital para PMEs brasileiras.',
   inLanguage: 'pt-BR',
