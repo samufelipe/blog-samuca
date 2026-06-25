@@ -4,8 +4,8 @@ import * as path from 'path'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
-// Tópicos focados em dores reais de empreendedores, desconfiantes de tráfego pago,
-// gestores iniciantes e quem quer vender mais sem depender de indicação
+// Tópicos focados em dores reais: empreendedor desconfiante, quem quer escalar,
+// gestores iniciantes, temas em alta no mercado digital atual
 const TOPICS = [
   'Investi em tráfego pago e não tive resultado: o que realmente deu errado',
   'Por que você não consegue vender pelo Instagram mesmo tendo muitos seguidores',
@@ -15,44 +15,85 @@ const TOPICS = [
   'Por que sua campanha funcionou bem no início e parou do nada',
   'Como parar de depender 100% de indicação e ter clientes todo dia',
   'O que nenhum gestor de tráfego te conta antes de você fechar contrato',
-  'Você precisa de site ou landing page? A resposta que ninguém dá de forma honesta',
+  'Você precisa de site ou landing page? A resposta honesta que ninguém dá',
   'Por que o seu concorrente aparece mais no Google mesmo gastando menos',
   'Como definir quanto investir em anúncios sem jogar dinheiro fora',
-  'O empreendedor que perdeu R$15 mil em tráfego pago e o que aprendi com isso',
   'Tráfego pago para negócio local: o que funciona e o que é mito',
   'Como interpretar os números da sua campanha sem precisar ser especialista',
-  'Por que lead barato nem sempre é bom negócio (e quando ele é um problema)',
+  'Por que lead barato nem sempre é bom negócio e quando ele é um problema',
   'O erro de comunicação que faz a maioria dos anúncios não converterem',
-  'Como uma clínica de estética saiu de 3 para 40 agendamentos por mês com tráfego pago',
-  'Gestores de tráfego iniciantes: os erros que eu cometi nos primeiros anos',
+  'Gestores de tráfego iniciantes: os erros que cometi nos primeiros anos',
   'O que realmente importa medir nas suas campanhas (e o que é número de vaidade)',
   'Por que você está pagando caro por clique e como resolver isso',
-  'Meta Ads vs Google Ads: qual usar para o seu tipo de negócio',
-  'Como criar um anúncio que para o dedo da pessoa no feed e faz ela querer saber mais',
-  'Automação e inteligência artificial nos anúncios: o que realmente funciona hoje',
-  'O que é funil de vendas e por que ignorar isso está te custando clientes todos os dias',
+  'Como criar um anúncio que para o dedo da pessoa no feed',
+  'Inteligência artificial nos anúncios: o que realmente funciona e o que é hype',
+  'O que é funil de vendas e por que ignorar isso está te custando clientes',
   'Como vender serviços de alto valor com tráfego pago sem parecer agressivo',
   'Por que sua landing page recebe visitas mas não converte em clientes',
   'Tráfego pago para prestador de serviços: por onde começar sem perder dinheiro',
-  'Como uma imobiliária gerou 200 leads qualificados em 30 dias (e o que aprendi)',
-  'O que faço antes de criar qualquer campanha (e por que isso muda tudo)',
   'Como turbinar os resultados de quem já faz tráfego pago mas está estagnado',
+  'Primeira campanha no Meta Ads: o passo a passo que eu seguiria hoje',
+  'Como escalar vendas digitais sem aumentar o custo por cliente',
+  'O que mudou no Meta Ads em 2025 e o que você precisa adaptar agora',
+  'Como uma empresa de serviços pode usar tráfego pago para crescer de forma previsível',
+  'TikTok Ads vale a pena para o seu negócio? Resposta honesta com dados reais',
 ]
 
+// Imagens por categoria (Unsplash — alta qualidade, uso gratuito com atribuição)
+const COVER_IMAGES: Record<string, string[]> = {
+  'Meta Ads': [
+    'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=630&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=1200&h=630&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=1200&h=630&fit=crop&q=80',
+  ],
+  'Google Ads': [
+    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&h=630&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=1200&h=630&fit=crop&q=80',
+  ],
+  'Landing Pages': [
+    'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=630&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1547658719-da2b51169166?w=1200&h=630&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=630&fit=crop&q=80',
+  ],
+  'Estratégia Digital': [
+    'https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&h=630&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=630&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1200&h=630&fit=crop&q=80',
+  ],
+  'Analytics': [
+    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&h=630&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&h=630&fit=crop&q=80',
+  ],
+}
+
+const DEFAULT_IMAGES = [
+  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&h=630&fit=crop&q=80',
+]
+
+function getCoverImage(category: string, dayIndex: number): string {
+  const pool = COVER_IMAGES[category] ?? DEFAULT_IMAGES
+  return pool[dayIndex % pool.length]
+}
+
 const SAMUEL_PROFILE = `
-SOBRE SAMUEL FELIPE (autor do blog — escreva como se fosse ele):
+SOBRE SAMUEL FELIPE (autor do blog — escreva na voz dele, em primeira pessoa):
 - Especialista em tráfego pago com mais de 6 anos de experiência prática
-- Trabalhou com HDI Brasil, Instituto Embelleze (Grupo SMZTO), Porsche Center BH, Mercedes-Benz,
-  Grupo Colina, Valem Administradora de Benefícios, Móveis Bechara, FAS Iluminação,
-  Ilimit Proteção Veicular, Factorial Imóveis, Paula Reis Fotografia, Inovando Na Sua Obra
-  e dezenas de negócios locais
-- Certificações Google: Rede de Pesquisa, Display, Criativos, Métricas, Alta Performance com IA
-- Domina: Google Ads, Meta Ads, TikTok Ads, Google Tag Manager, GA4, CRO, funis de vendas
+- Já atendeu desde negócios locais até grandes marcas: HDI Brasil, Instituto Embelleze (Grupo SMZTO),
+  Porsche Center BH, Mercedes-Benz, Grupo Colina, Valem Administradora de Benefícios,
+  Móveis Bechara, FAS Iluminação, Ilimit Proteção Veicular, Factorial Imóveis, Paula Reis Fotografia,
+  Inovando Na Sua Obra, entre outros
+- Certificações Google: Rede de Pesquisa, Display, Criativos, Métricas e Alta Performance com IA
+- Domina: Google Ads, Meta Ads, TikTok Ads, Pinterest Ads, Google Tag Manager, GA4, CRO, funis de vendas,
+  automações de marketing
 - Segmentos de experiência: e-commerce, concessionárias, clínicas, imobiliárias, serviços locais,
-  móveis planejados, iluminação, proteção veicular, educação, benefícios corporativos
-- Perfil: analítico, direto, responsável. Traduz assuntos complexos em linguagem simples.
-  Toma decisões baseadas em dados mas sem perder a visão humana e comercial.
-- Não gosta de fazer por fazer: analisa o negócio completo (oferta, posicionamento, funil, processo comercial)
+  móveis planejados, iluminação, proteção veicular, educação, benefícios corporativos, jurídico
+- Perfil: analítico, direto, sem rodeios. Traduz assuntos complexos em linguagem simples.
+  Não se limita a campanhas: analisa oferta, posicionamento, funil, processo comercial.
+- Valores: honestidade intelectual, transparência, excelência sem arrogância
 `
 
 function toSlug(text: string): string {
@@ -71,6 +112,7 @@ async function generateArticle(topic: string): Promise<void> {
   console.log(`Gerando artigo sobre: "${topic}"`)
 
   const today = new Date().toISOString().split('T')[0]
+  const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24))
 
   const prompt = `${SAMUEL_PROFILE}
 
@@ -78,45 +120,52 @@ Escreva um artigo de blog completo em português brasileiro sobre:
 "${topic}"
 
 TOM E ESTILO OBRIGATÓRIOS:
-- Escreva como Samuel falaria com um amigo empreendedor, não como um manual técnico
-- Linguagem simples e acessível: quando usar termos técnicos, explique com analogia ou exemplo prático
-- Alto conhecimento com didática simples: o leitor precisa entender PROFUNDAMENTE, não superficialmente
+- Escreva como Samuel falaria com um empreendedor ou gestor que ele respeita, não como um manual técnico
+- Linguagem simples e acessível: quando usar termos técnicos, explique com analogia ou exemplo concreto
+- Alto conhecimento com didática simples: o leitor precisa ENTENDER DE VERDADE, não só ler
 - Primeira pessoa ("eu", "vi", "atendi", "aprendi") — você fala de experiência real
 - Seja honesto, direto, sem rodeios e sem bajulação ao leitor
-- Use exemplos de clientes reais que você atendeu (sem revelar nomes ou dados sensíveis quando necessário, pode mencionar o setor ou o porte)
+- Use exemplos de clientes reais que você atendeu (pode mencionar o setor ou porte sem revelar dados sensíveis)
 - Mostre o lado humano e comercial, não só o técnico
-- Tom: confiante sem arrogância. Você sabe o que está falando e isso aparece na precisão, não no jargão.
-- Estrutura de parágrafo: varie o ritmo. Parágrafos curtos para pontos fortes. Parágrafos mais longos para explicações. Não use bullets em excesso.
+- Tom: confiante sem arrogância. A precisão dos exemplos e dados é o que mostra autoridade, não o jargão.
+- Varie o ritmo dos parágrafos. Parágrafos curtos para pontos fortes. Mais longos para explicações. Não abuse de bullets.
 
 PÚBLICO-ALVO (escreva pensando nessas pessoas):
-- Empreendedores que já tentaram tráfego pago e não tiveram resultado
+- Empreendedores que já tentaram tráfego pago e não tiveram resultado esperado
 - Donos de negócio que desconfiam de agências e gestores de tráfego
-- Quem quer aumentar vendas mas não sabe por onde começar no digital
-- Gestores de tráfego iniciantes que querem aprender de verdade
-- Quem depende de indicação e quer construir um fluxo previsível de clientes
+- Empresas que já faturam e querem aumentar e escalar vendas de forma previsível
+- Gestores de marketing que querem ir além do básico
+- Gestores de tráfego iniciantes que querem aprender de verdade, não de teoria
 
-REGRAS TÉCNICAS OBRIGATÓRIAS:
+REGRAS TÉCNICAS:
 1. Retorne APENAS o conteúdo MDX completo, começando com --- (frontmatter YAML)
 2. Não use bloco de código ao redor do conteúdo
-3. O frontmatter YAML deve ter exatamente estes campos:
-   - title: (título SEO, 55-65 caracteres, com keyword principal, sem aspas duplas internas)
-   - description: (meta description, 145-160 caracteres)
+3. O frontmatter YAML deve ter EXATAMENTE estes campos (sem outros):
+   - title: string (55-65 chars, com keyword principal, SEM aspas duplas internas)
+   - description: string (145-160 chars)
    - date: "${today}"
    - lastModified: "${today}"
-   - category: (uma de: Meta Ads | Google Ads | Landing Pages | Estratégia Digital | Analytics)
-   - tags: (array de 4-6 strings em minúsculo)
-   - readingTime: (ex: "8 min")
+   - category: string (uma de: Meta Ads | Google Ads | Landing Pages | Estratégia Digital | Analytics)
+   - tags: array de 4-6 strings em minúsculo
+   - coverImage: string (use exatamente uma dessas URLs baseada na category escolhida:
+       Meta Ads → https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=630&fit=crop&q=80
+       Google Ads → https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop&q=80
+       Landing Pages → https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=630&fit=crop&q=80
+       Estratégia Digital → https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&h=630&fit=crop&q=80
+       Analytics → https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&q=80)
+   - coverImageAlt: string (descrição da imagem para acessibilidade)
+   - readingTime: string (ex: "8 min")
    - featured: false
-   - faq: (array de 3-5 objetos com "q" e "a" — perguntas reais que o leitor teria)
+   - faq: array de 3-5 objetos {q: string, a: string}
 4. Mínimo 1800 palavras no corpo do artigo
 5. Estrutura: H2 para seções principais, H3 para subseções quando necessário
-6. Primeira frase de cada seção H2 responde diretamente ao subtítulo (para SEO de featured snippets)
-7. Inclua pelo menos 4 dados ou números concretos com contexto (pode ser da sua experiência: "de 12 contas que auditei nesse cenário..." ou do mercado)
-8. FAQ: perguntas que um empreendedor desconfiante faria, respostas honestas com pelo menos 3 frases
+6. Primeira frase de cada seção H2 responde diretamente ao subtítulo
+7. Inclua pelo menos 4 dados ou números concretos com contexto real
+8. FAQ: perguntas honestas que um empreendedor desconfiante faria, respostas com pelo menos 3 frases
 9. NÃO use: crucial, pivotal, vibrant, tapestry, delve, showcase, groundbreaking, nestled, boasts
 10. NÃO use travessão longo (—). Use vírgula, ponto ou dois-pontos.
-11. Links internos: 2 sugestões naturais no texto para outros artigos do blog (formato: [âncora](/slug))
-12. Conclusão: termine com um parágrafo que convida ao contato via WhatsApp de forma natural, sem soar como anúncio
+11. Links internos: 2 sugestões naturais no texto (formato: [texto âncora](/slug-provavel))
+12. Conclusão: termine convidando ao contato via WhatsApp de forma natural, sem soar como anúncio
 
 Retorne o MDX completo agora:`
 
@@ -126,10 +175,18 @@ Retorne o MDX completo agora:`
     messages: [{ role: 'user', content: prompt }],
   })
 
-  const content = (response.content[0] as { text: string }).text.trim()
+  let content = (response.content[0] as { text: string }).text.trim()
 
   if (!content.startsWith('---')) {
     throw new Error('Resposta inválida: não começa com frontmatter YAML')
+  }
+
+  // Injeta coverImage se o modelo não incluiu
+  if (!content.includes('coverImage:')) {
+    const categoryMatch = content.match(/category:\s*["']?([^"'\n]+)["']?/)
+    const category = categoryMatch?.[1]?.trim() ?? 'Estratégia Digital'
+    const img = getCoverImage(category, dayIndex)
+    content = content.replace(/^(---\n)/, `$1coverImage: "${img}"\ncoverImageAlt: "Imagem do artigo"\n`)
   }
 
   const slug = toSlug(topic)

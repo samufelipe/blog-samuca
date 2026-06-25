@@ -16,6 +16,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const article = getArticleBySlug(params.slug)
   if (!article) return {}
+  const ogImage = article.coverImage ?? article.image
   return {
     title: article.title,
     description: article.description,
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       modifiedTime: article.lastModified ?? article.date,
       authors: ['Samuel Felipe'],
       tags: article.tags,
-      images: article.image ? [{ url: article.image, alt: article.imageAlt ?? article.title }] : undefined,
+      images: ogImage ? [{ url: ogImage, alt: article.coverImageAlt ?? article.title }] : undefined,
     },
     alternates: { canonical: `https://blog.samucads.com.br/${article.slug}` },
   }
@@ -89,8 +90,23 @@ export default function ArticlePage({ params }: Props) {
         </div>
       </section>
 
+      {/* Imagem de capa */}
+      {article.coverImage && (
+        <div className="px-6 md:px-12 pb-2">
+          <div className="max-w-3xl mx-auto">
+            <div className="w-full aspect-video overflow-hidden">
+              <img
+                src={article.coverImage}
+                alt={article.coverImageAlt ?? article.title}
+                className="w-full h-full object-cover grayscale opacity-60"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Divisor */}
-      <div className="max-w-3xl mx-auto px-6 md:px-12">
+      <div className="max-w-3xl mx-auto px-6 md:px-12 mt-10">
         <div className="h-px bg-white/[0.06]" />
       </div>
 
@@ -135,7 +151,7 @@ export default function ArticlePage({ params }: Props) {
           <div>
             <p className="text-[11px] tracking-[0.2em] uppercase text-white/20 mb-1">Autor</p>
             <p className="text-sm font-semibold text-white/80">Samuel Felipe</p>
-            <p className="text-[12px] text-white/35 mt-0.5">Especialista em tráfego pago com mais de 5 anos de experiência em Meta Ads, Google Ads e estratégia digital para PMEs.</p>
+            <p className="text-[12px] text-white/35 mt-0.5">Especialista em tráfego pago com 6 anos de experiência. Já atendeu desde negócios locais até marcas nacionais como HDI Brasil, Mercedes-Benz e Porsche Center BH.</p>
           </div>
         </div>
       </section>
@@ -173,10 +189,17 @@ export default function ArticlePage({ params }: Props) {
               <div className="grid grid-cols-1 md:grid-cols-3">
                 {related.map((rel) => (
                   <Link key={rel.slug} href={`/${rel.slug}`}
-                    className="group border border-white/[0.05] -mt-px -ml-px p-7 flex flex-col gap-4 hover:bg-white/[0.02] transition-colors">
-                    <span className="text-[10px] tracking-[0.2em] uppercase text-white/20">{rel.category}</span>
-                    <h4 className="playfair text-[14px] font-semibold text-white/70 group-hover:text-white leading-snug transition-colors line-clamp-3">{rel.title}</h4>
-                    <span className="text-white/15 group-hover:text-white/40 transition-colors text-sm mt-auto">→</span>
+                    className="group border border-white/[0.05] -mt-px -ml-px flex flex-col hover:bg-white/[0.02] transition-colors overflow-hidden">
+                    {rel.coverImage && (
+                      <div className="w-full aspect-video overflow-hidden">
+                        <img src={rel.coverImage} alt={rel.title} className="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-55 transition-opacity" />
+                      </div>
+                    )}
+                    <div className="p-7 flex flex-col gap-4 flex-1">
+                      <span className="text-[10px] tracking-[0.2em] uppercase text-white/20">{rel.category}</span>
+                      <h4 className="playfair text-[14px] font-semibold text-white/70 group-hover:text-white leading-snug transition-colors line-clamp-3">{rel.title}</h4>
+                      <span className="text-white/15 group-hover:text-white/40 transition-colors text-sm mt-auto">→</span>
+                    </div>
                   </Link>
                 ))}
               </div>

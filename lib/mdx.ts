@@ -16,6 +16,8 @@ export interface ArticleFrontmatter {
   lastModified?: string
   category: string
   tags: string[]
+  coverImage?: string
+  coverImageAlt?: string
   image?: string
   imageAlt?: string
   readingTime?: string

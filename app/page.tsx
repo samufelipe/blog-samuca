@@ -13,13 +13,13 @@ export default function BlogHome() {
       <section className="px-6 md:px-12 pt-20 pb-16">
         <div className="max-w-6xl mx-auto">
           <p className="text-[10px] tracking-[0.35em] uppercase text-white/20 mb-6">
-            Estratégia Digital · Marketing Pago · PMEs Brasileiras
+            Tráfego Pago · Estratégia Digital · Resultados Reais
           </p>
           <h1 className="playfair text-[clamp(2.8rem,7vw,5.5rem)] font-bold leading-[1.05] tracking-tight mb-6">
             Tráfego que<br /><em>converte.</em>
           </h1>
           <p className="text-white/40 text-base md:text-lg max-w-xl leading-relaxed">
-            Artigos práticos sobre Meta Ads, Google Ads e estratégia digital. Sem teoria vaga — só o que funciona para negócios reais no Brasil.
+            Artigos práticos sobre Meta Ads, Google Ads e estratégia digital. Sem teoria vaga, sem promessas, só o que funciona para negócios que querem crescer de verdade.
           </p>
         </div>
       </section>
@@ -55,31 +55,44 @@ export default function BlogHome() {
                 <Link
                   key={article.slug}
                   href={`/${article.slug}`}
-                  className="group border border-white/[0.05] -mt-px -ml-px p-8 md:p-10 flex flex-col gap-5 hover:bg-white/[0.02] transition-colors"
+                  className="group border border-white/[0.05] -mt-px -ml-px flex flex-col hover:bg-white/[0.02] transition-colors overflow-hidden"
                 >
-                  {/* Categoria + data */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] tracking-[0.25em] uppercase text-white/25">{article.category}</span>
-                    <span className="text-[10px] text-white/15 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
-                  </div>
+                  {/* Imagem de capa */}
+                  {article.coverImage && (
+                    <div className="w-full aspect-video overflow-hidden">
+                      <img
+                        src={article.coverImage}
+                        alt={article.title}
+                        className="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-55 transition-opacity"
+                      />
+                    </div>
+                  )}
 
-                  {/* Título */}
-                  <h2 className="playfair text-[15px] md:text-base font-semibold text-white/80 group-hover:text-white leading-snug transition-colors line-clamp-3">
-                    {article.title}
-                  </h2>
+                  <div className="p-8 md:p-10 flex flex-col gap-5 flex-1">
+                    {/* Categoria + índice */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] tracking-[0.25em] uppercase text-white/25">{article.category}</span>
+                      <span className="text-[10px] text-white/15 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+                    </div>
 
-                  {/* Descrição */}
-                  <p className="text-[13px] text-white/35 leading-relaxed line-clamp-2 flex-1">
-                    {article.description}
-                  </p>
+                    {/* Título */}
+                    <h2 className="playfair text-[15px] md:text-base font-semibold text-white/80 group-hover:text-white leading-snug transition-colors line-clamp-3">
+                      {article.title}
+                    </h2>
 
-                  {/* Meta */}
-                  <div className="flex items-center justify-between mt-auto pt-2">
-                    <span className="text-[11px] text-white/20">
-                      {new Date(article.date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}
-                      {article.readingTime && ` · ${article.readingTime}`}
-                    </span>
-                    <span className="text-white/15 group-hover:text-white/50 transition-colors">→</span>
+                    {/* Descrição */}
+                    <p className="text-[13px] text-white/35 leading-relaxed line-clamp-2 flex-1">
+                      {article.description}
+                    </p>
+
+                    {/* Meta */}
+                    <div className="flex items-center justify-between mt-auto pt-2">
+                      <span className="text-[11px] text-white/20">
+                        {new Date(article.date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                        {article.readingTime && ` · ${article.readingTime}`}
+                      </span>
+                      <span className="text-white/15 group-hover:text-white/50 transition-colors">→</span>
+                    </div>
                   </div>
                 </Link>
               ))}
