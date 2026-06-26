@@ -43,8 +43,8 @@ const TOPICS = [
 // O modelo escolhe a mais coerente com o TEMA do artigo, não só a categoria.
 const IMAGE_CATALOG = [
   {
-    url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&q=80',
-    alt: 'Dashboard de analytics com gráficos e métricas de performance',
+    url: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&h=630&fit=crop&q=80',
+    alt: 'Laptop com dashboard de analytics mostrando métricas de performance de campanhas',
     topics: ['roas', 'métricas', 'analytics', 'performance', 'resultados', 'dados', 'relatório', 'números'],
   },
   {
@@ -177,7 +177,7 @@ REGRAS TÉCNICAS:
    - category: string (uma de: Meta Ads | Google Ads | Landing Pages | Estratégia Digital | Analytics)
    - tags: array de 4-6 strings em minúsculo
    - coverImage: string (escolha a URL mais coerente com o TEMA do artigo, não apenas a categoria. Opções disponíveis:
-       [analytics/métricas/roas/performance] → https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&q=80
+       [analytics/métricas/roas/performance] → https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&h=630&fit=crop&q=80
        [laptop/campanhas/google ads/orçamento] → https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop&q=80
        [estratégia/funil/planejamento/vendas] → https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&h=630&fit=crop&q=80
        [trabalho/gestão/operação/gestor] → https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=1200&h=630&fit=crop&q=80
