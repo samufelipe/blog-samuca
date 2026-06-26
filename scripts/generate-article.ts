@@ -39,44 +39,73 @@ const TOPICS = [
   'TikTok Ads vale a pena para o seu negócio? Resposta honesta com dados reais',
 ]
 
-// Imagens por categoria (Unsplash : alta qualidade, uso gratuito com atribuição)
-const COVER_IMAGES: Record<string, string[]> = {
-  'Meta Ads': [
-    'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=1200&h=630&fit=crop&q=80',
-  ],
-  'Google Ads': [
-    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=1200&h=630&fit=crop&q=80',
-  ],
-  'Landing Pages': [
-    'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1547658719-da2b51169166?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=630&fit=crop&q=80',
-  ],
-  'Estratégia Digital': [
-    'https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1200&h=630&fit=crop&q=80',
-  ],
-  'Analytics': [
-    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&h=630&fit=crop&q=80',
-  ],
-}
-
-const DEFAULT_IMAGES = [
-  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&h=630&fit=crop&q=80',
+// Catálogo de imagens com descrição do conteúdo visual.
+// O modelo escolhe a mais coerente com o TEMA do artigo, não só a categoria.
+const IMAGE_CATALOG = [
+  {
+    url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&q=80',
+    alt: 'Dashboard de analytics com gráficos e métricas de performance',
+    topics: ['roas', 'métricas', 'analytics', 'performance', 'resultados', 'dados', 'relatório', 'números'],
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop&q=80',
+    alt: 'Laptop aberto com gráficos de campanhas digitais na tela',
+    topics: ['campanha', 'google ads', 'search', 'performance max', 'anúncios', 'investimento', 'orçamento'],
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&h=630&fit=crop&q=80',
+    alt: 'Equipe reunida analisando estratégia de marketing em quadro branco',
+    topics: ['estratégia', 'funil', 'planejamento', 'escalar', 'crescimento', 'vendas', 'processo'],
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=1200&h=630&fit=crop&q=80',
+    alt: 'Pessoa digitando em laptop em ambiente de trabalho moderno',
+    topics: ['trabalho', 'gestão', 'operação', 'gestor', 'iniciante', 'rotina', 'execução'],
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=630&fit=crop&q=80',
+    alt: 'Tela de computador mostrando design de site e wireframes',
+    topics: ['landing page', 'site', 'design', 'conversão', 'página', 'cro', 'usabilidade'],
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=630&fit=crop&q=80',
+    alt: 'Reunião de negócios com profissionais discutindo resultados',
+    topics: ['negócio', 'cliente', 'reunião', 'proposta', 'contrato', 'parceria', 'b2b'],
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&h=630&fit=crop&q=80',
+    alt: 'Gráficos e tabelas de dados sendo analisados profissionalmente',
+    topics: ['leads', 'cpl', 'cpa', 'custo', 'retorno', 'roi', 'investimento', 'meta'],
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=630&fit=crop&q=80',
+    alt: 'Pessoa navegando em redes sociais no smartphone',
+    topics: ['instagram', 'facebook', 'social media', 'engajamento', 'seguidores', 'conteúdo', 'tiktok'],
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1200&h=630&fit=crop&q=80',
+    alt: 'Profissionais de marketing discutindo campanha em ambiente corporativo',
+    topics: ['agência', 'time', 'marketing', 'briefing', 'campanha', 'criativo', 'copy'],
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&h=630&fit=crop&q=80',
+    alt: 'Múltiplas telas mostrando dados e dashboards de marketing',
+    topics: ['pixel', 'tag manager', 'rastreamento', 'configuração', 'tracking', 'evento', 'ga4'],
+  },
 ]
 
-function getCoverImage(category: string, dayIndex: number): string {
-  const pool = COVER_IMAGES[category] ?? DEFAULT_IMAGES
-  return pool[dayIndex % pool.length]
+function getCoverImageForTopic(topic: string): { url: string; alt: string } {
+  const topicLower = topic.toLowerCase()
+  let bestMatch = IMAGE_CATALOG[0]
+  let bestScore = 0
+  for (const img of IMAGE_CATALOG) {
+    const score = img.topics.filter((t) => topicLower.includes(t)).length
+    if (score > bestScore) {
+      bestScore = score
+      bestMatch = img
+    }
+  }
+  return bestMatch
 }
 
 const SAMUEL_PROFILE = `
@@ -147,13 +176,17 @@ REGRAS TÉCNICAS:
    - lastModified: "${today}"
    - category: string (uma de: Meta Ads | Google Ads | Landing Pages | Estratégia Digital | Analytics)
    - tags: array de 4-6 strings em minúsculo
-   - coverImage: string (use exatamente uma dessas URLs baseada na category escolhida:
-       Meta Ads → https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=630&fit=crop&q=80
-       Google Ads → https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop&q=80
-       Landing Pages → https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=630&fit=crop&q=80
-       Estratégia Digital → https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&h=630&fit=crop&q=80
-       Analytics → https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&q=80)
-   - coverImageAlt: string (descrição da imagem para acessibilidade)
+   - coverImage: string (escolha a URL mais coerente com o TEMA do artigo, não apenas a categoria. Opções disponíveis:
+       [analytics/métricas/roas/performance] → https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&q=80
+       [laptop/campanhas/google ads/orçamento] → https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop&q=80
+       [estratégia/funil/planejamento/vendas] → https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&h=630&fit=crop&q=80
+       [trabalho/gestão/operação/gestor] → https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=1200&h=630&fit=crop&q=80
+       [landing page/site/design/conversão] → https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=630&fit=crop&q=80
+       [reunião/cliente/negócio/b2b] → https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=630&fit=crop&q=80
+       [leads/cpl/cpa/custo/roi] → https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&h=630&fit=crop&q=80
+       [instagram/redes sociais/celular/conteúdo] → https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=630&fit=crop&q=80
+       [pixel/rastreamento/tracking/tag] → https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&h=630&fit=crop&q=80)
+   - coverImageAlt: string (descrição visual precisa da imagem escolhida, em português)
    - readingTime: string (ex: "8 min")
    - featured: false
    - faq: array de 3-5 objetos {q: string, a: string}
@@ -181,12 +214,10 @@ Retorne o MDX completo agora:`
     throw new Error('Resposta inválida: não começa com frontmatter YAML')
   }
 
-  // Injeta coverImage se o modelo não incluiu
+  // Fallback: injeta coverImage baseada no tópico se o modelo não incluiu
   if (!content.includes('coverImage:')) {
-    const categoryMatch = content.match(/category:\s*["']?([^"'\n]+)["']?/)
-    const category = categoryMatch?.[1]?.trim() ?? 'Estratégia Digital'
-    const img = getCoverImage(category, dayIndex)
-    content = content.replace(/^(---\n)/, `$1coverImage: "${img}"\ncoverImageAlt: "Imagem do artigo"\n`)
+    const { url, alt } = getCoverImageForTopic(topic)
+    content = content.replace(/^(---\n)/, `$1coverImage: "${url}"\ncoverImageAlt: "${alt}"\n`)
   }
 
   const slug = toSlug(topic)
